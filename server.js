@@ -35,6 +35,30 @@ app.post("/api/deploy-bank", (req, res) => {
   runCommand(deployBank(), res, `Bank of Anthos deployed`);
 });
 
+// Add this endpoint
+app.post("/api/gemini-chat", async (req, res) => {
+  const { message, context } = req.body;
+  
+  try {
+    // In production, call actual Gemini API
+    // For now, simple responses
+    const responses = {
+      "deploy": "To deploy Bank of Anthos, click the deployment buttons in order: Create Cluster → Get Credentials → Deploy Bank",
+      "error": "Check the console output for error details. Common issues include authentication or quota limits.",
+      "status": "Use the Check Status button to see pod statuses and get the frontend IP address.",
+    };
+    
+    // Simple keyword matching for demo
+    const keyword = Object.keys(responses).find(k => message.toLowerCase().includes(k));
+    const response = responses[keyword] || "I can help with Bank of Anthos deployment. What would you like to know?";
+    
+    res.json({ response });
+  } catch (error) {
+    res.status(500).json({ error: "Gemini chat failed" });
+  }
+});
+
 app.listen(4000, () => {
   console.log("Backend running on http://localhost:4000");
 });
+
