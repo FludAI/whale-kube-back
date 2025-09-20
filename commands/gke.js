@@ -1,10 +1,20 @@
-function createCluster(name, region, numNodes, minNodes, maxNodes) {
-  return `gcloud container clusters create ${name} \
+function createCluster(name, region, numNodes, minNodes, maxNodes, machineType, enableAutoscaling) {
+  let cmd = `gcloud container clusters create ${name} \
     --zone ${region} \
-    --num-nodes ${numNodes} \
+    --machine-type ${machineType}`;
+  
+  if (enableAutoscaling) {
+    cmd += ` \
     --enable-autoscaling \
+    --num-nodes ${numNodes} \
     --min-nodes ${minNodes} \
     --max-nodes ${maxNodes}`;
+  } else {
+    cmd += ` \
+    --num-nodes ${numNodes}`;
+  }
+  
+  return cmd;
 }
 
 function getClusterCreds(name, region) {

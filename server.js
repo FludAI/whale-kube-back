@@ -18,9 +18,9 @@ function runCommand(cmd, res, successMsg) {
 }
 
 app.post("/api/create-cluster", (req, res) => {
-  const { name, region, numNodes, minNodes, maxNodes } = req.body;
+  const { name, region, numNodes, minNodes, maxNodes, machineType, enableAutoscaling } = req.body;
   runCommand(
-    createCluster(name, region, numNodes, minNodes, maxNodes),
+    createCluster(name, region, numNodes, minNodes, maxNodes, machineType, enableAutoscaling),
     res,
     `Cluster ${name} created`
   );
