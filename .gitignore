@@ -1,5 +1,18 @@
 # ENV
 *.ENV
+bondswipe-sa.json
+.gcp-temp-creds.json
+*-sa.json
+*-credentials.json
+*-creds.json
+
+# Other sensitive files
+.env.local
+.env.production
+
+# Temporary files
+*.tmp
+*.log
 
 # Logs
 logs
